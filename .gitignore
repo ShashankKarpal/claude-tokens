@@ -3,3 +3,17 @@
 *.swp
 .vscode/
 .idea/
+
+# hardening baseline
+.env
+*.log
+*.pem
+*.key
+*.db
+*.sqlite
+secrets.*
+credentials.*
+config.json
+local_settings.py
+__pycache__/
+*.pyc
