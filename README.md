@@ -1,4 +1,3 @@
-<!-- BANNER: uncomment once design/github/readme-banner-{light,dark}-1400x400.png exist.
 <p align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)"  srcset="design/github/readme-banner-dark-1400x400.png">
@@ -6,7 +5,6 @@
     <img alt="Claude Code Tokens" src="design/github/readme-banner-dark-1400x400.png" width="680">
   </picture>
 </p>
--->
 
 <h1 align="center">uebersicht-claude-tokens</h1>
 
@@ -68,7 +66,7 @@ The tile appears on the desktop and updates itself. No interaction needed.
 claude-tokens.widget/     the widget (index.coffee)
 claude-tokens.widget.zip  packaged widget for the Ubersicht gallery
 widget.json               gallery manifest
-design/                   brand assets, screenshot
+design/                   brand assets, tokens, BRAND.md
 ```
 
 ## Note on cost
