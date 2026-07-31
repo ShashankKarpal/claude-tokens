@@ -1,8 +1,8 @@
 <p align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)"  srcset="design/github/readme-banner-dark-1400x400.png">
-    <source media="(prefers-color-scheme: light)" srcset="design/github/readme-banner-light-1400x400.png">
-    <img alt="Claude Code Tokens" src="design/github/readme-banner-dark-1400x400.png" width="680">
+    <source media="(prefers-color-scheme: dark)"  srcset="design/github/readme-banner-dark.svg">
+    <source media="(prefers-color-scheme: light)" srcset="design/github/readme-banner-light.svg">
+    <img alt="Claude Code Tokens" src="design/github/readme-banner-dark.svg" width="680">
   </picture>
 </p>
 
@@ -49,7 +49,7 @@ Requires: Ubersicht, ccusage, jq.
 ```bash
 brew install ccusage jq
 git clone https://github.com/ShashankKarpal/uebersicht-claude-tokens.git
-cp -r uebersicht-claude-tokens/claude-tokens.widget ~/Library/Application\ Support/Übersicht/widgets/
+cp -r uebersicht-claude-tokens/claude-tokens.widget ~/Library/Application\\ Support/Übersicht/widgets/
 ```
 
 Click the Ubersicht menu bar icon and choose Refresh all.

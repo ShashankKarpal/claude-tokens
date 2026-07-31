@@ -27,7 +27,7 @@ display: 'main'
 render: (output) -> """
   <div class='widget-card'>
     <div class='header'>
-      <div class='icon'>🤖</div>
+      <div class='icon'><svg viewBox="0 0 96 96" width="26" height="26"><rect x="15" y="71" width="22" height="7" rx="3.5" fill="#2FD4C4"/><rect x="15" y="61" width="22" height="7" rx="3.5" fill="#2FD4C4"/><rect x="37" y="71" width="22" height="7" rx="3.5" fill="#2FD4C4"/><rect x="37" y="61" width="22" height="7" rx="3.5" fill="#2FD4C4"/><rect x="37" y="51" width="22" height="7" rx="3.5" fill="#2FD4C4"/><rect x="37" y="41" width="22" height="7" rx="3.5" fill="#2FD4C4"/><rect x="59" y="71" width="22" height="7" rx="3.5" fill="#2FD4C4"/><rect x="59" y="61" width="22" height="7" rx="3.5" fill="#2FD4C4"/><rect x="59" y="51" width="22" height="7" rx="3.5" fill="#2FD4C4"/><rect x="59" y="41" width="22" height="7" rx="3.5" fill="#2FD4C4"/><rect x="59" y="31" width="22" height="7" rx="3.5" fill="#2FD4C4"/><rect x="59" y="21" width="22" height="7" rx="3.5" fill="#2FD4C4"/><rect x="59" y="8" width="22" height="7" rx="3.5" fill="#F7F5F2" transform="rotate(-12 70 11.5)"/></svg></div>
       <div class='title'>Claude Code Today</div>
     </div>
     <div class='main-number' id='main'>--</div>
@@ -97,8 +97,8 @@ style: """
     gap: 8px
     margin-bottom: 10px
 
-  .icon
-    font-size: 22px
+  .icon svg
+    display: block
 
   .title
     font-size: 14px
