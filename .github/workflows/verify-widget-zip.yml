@@ -1,0 +1,13 @@
+name: verify-widget-zip
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Zip must contain the .widget folder wrapper
+        run: unzip -l claude-tokens.widget.zip | grep -q 'claude-tokens.widget/index.coffee'
