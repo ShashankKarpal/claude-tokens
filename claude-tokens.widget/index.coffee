@@ -6,7 +6,7 @@ command: """
     echo '{"status":"error","message":"ccusage not available"}'
     exit 0
   fi
-  TODAY_DATA=$(echo "$JSON" | jq -r --arg today "$TODAY" '.daily[] | select(.period == $today)')
+  TODAY_DATA=$(echo "$JSON" | jq -r --arg today "$TODAY" '.daily[] | select((.date // .period) == $today)')
   if [ -z "$TODAY_DATA" ]; then
     echo "{\\"status\\":\\"empty\\",\\"date\\":\\"$TODAY\\"}"
     exit 0
