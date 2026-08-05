@@ -1,13 +1,37 @@
 name: verify-widget-zip
+
 on:
   push:
   pull_request:
+
 permissions:
   contents: read
+
 jobs:
   verify:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Zip must contain the .widget folder wrapper
         run: unzip -l claude-tokens.widget.zip | grep -q 'claude-tokens.widget/index.coffee'
+
+  # The Uebersicht gallery (felixhageloh/uebersicht-widgets) hardcodes the master
+  # branch in its widgets.json entry for this widget:
+  #   raw.githubusercontent.com/ShashankKarpal/uebersicht-claude-tokens/master/screenshot.png
+  #   raw.githubusercontent.com/ShashankKarpal/uebersicht-claude-tokens/master/claude-tokens.widget.zip
+  # This repo's default branch is main, so master exists purely as a publish pointer
+  # to keep those two URLs resolving. Nothing is ever committed to master directly,
+  # which is why the force push below is safe. Gated on verify so a broken zip is
+  # never published to the gallery. See felixhageloh/uebersicht-widgets#710.
+  sync-master:
+    needs: verify
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - name: Point master at main
+        run: git push origin --force HEAD:refs/heads/master
