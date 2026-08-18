@@ -6,16 +6,16 @@
   </picture>
 </p>
 
-<h1 align="center">uebersicht-claude-tokens</h1>
+<h1 align="center">claude-tokens</h1>
 
 <p align="center"><b>An Ubersicht widget showing daily Claude Code token usage as a desktop tile on macOS.</b></p>
 
 <p align="center">
-  <img alt="Platform" src="https://img.shields.io/badge/platform-macOS-0F7D74?style=flat-square">
-  <img alt="Status" src="https://img.shields.io/badge/status-v1.0-0F7D74?style=flat-square">
-  <img alt="No API keys" src="https://img.shields.io/badge/API%20keys-none-0F7D74?style=flat-square">
-  <img alt="Stack" src="https://img.shields.io/badge/built%20with-CoffeeScript-1C1B1D?style=flat-square">
-  <a href="LICENSE"><img alt="License" src="https://img.shields.io/badge/license-MIT-1C1B1D?style=flat-square"></a>
+  <img alt="Platform" src="https://img.shields.io/badge/platform-macOS-2D647F?style=flat-square">
+  <img alt="Status" src="https://img.shields.io/badge/status-v1.0-2D647F?style=flat-square">
+  <img alt="No API keys" src="https://img.shields.io/badge/API%20keys-none-2D647F?style=flat-square">
+  <img alt="Stack" src="https://img.shields.io/badge/built%20with-CoffeeScript-1A1917?style=flat-square">
+  <a href="LICENSE"><img alt="License" src="https://img.shields.io/badge/license-MIT-1A1917?style=flat-square"></a>
 </p>
 
 ## What it does
