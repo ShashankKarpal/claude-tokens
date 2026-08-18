@@ -17,8 +17,8 @@ jobs:
 
   # The Uebersicht gallery (felixhageloh/uebersicht-widgets) hardcodes the master
   # branch in its widgets.json entry for this widget:
-  #   raw.githubusercontent.com/ShashankKarpal/uebersicht-claude-tokens/master/screenshot.png
-  #   raw.githubusercontent.com/ShashankKarpal/uebersicht-claude-tokens/master/claude-tokens.widget.zip
+  #   raw.githubusercontent.com/ShashankKarpal/claude-tokens/master/screenshot.png
+  #   raw.githubusercontent.com/ShashankKarpal/claude-tokens/master/claude-tokens.widget.zip
   # This repo's default branch is main, so master exists purely as a publish pointer
   # to keep those two URLs resolving. Nothing is ever committed to master directly,
   # which is why the force push below is safe. Gated on verify so a broken zip is

@@ -48,8 +48,8 @@ Requires: Ubersicht, ccusage, jq.
 
 ```bash
 brew install ccusage jq
-git clone https://github.com/ShashankKarpal/uebersicht-claude-tokens.git
-cp -r uebersicht-claude-tokens/claude-tokens.widget ~/Library/Application\ Support/Übersicht/widgets/
+git clone https://github.com/ShashankKarpal/claude-tokens.git
+cp -r claude-tokens/claude-tokens.widget ~/Library/Application\ Support/Übersicht/widgets/
 ```
 
 Click the Ubersicht menu bar icon and choose Refresh all.
