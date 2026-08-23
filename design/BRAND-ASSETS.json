@@ -1,0 +1,77 @@
+{
+  "assets": [
+    {
+      "destination": "design/github/readme-banner-dark-1400x400.svg",
+      "destinationSha256": "a162cfdf1a76bcc6ade494081cf20786d7401f8ea59809d0743e59a175c46ef6",
+      "mode": "copy",
+      "source": "design/marks/out/claude-tokens/web/banner-dark-1400x400.svg",
+      "sourceSha256": "a162cfdf1a76bcc6ade494081cf20786d7401f8ea59809d0743e59a175c46ef6"
+    },
+    {
+      "destination": "design/github/readme-banner-dark.svg",
+      "destinationSha256": "a162cfdf1a76bcc6ade494081cf20786d7401f8ea59809d0743e59a175c46ef6",
+      "mode": "copy",
+      "source": "design/marks/out/claude-tokens/web/banner-dark-1400x400.svg",
+      "sourceSha256": "a162cfdf1a76bcc6ade494081cf20786d7401f8ea59809d0743e59a175c46ef6"
+    },
+    {
+      "destination": "design/github/readme-banner-light-1400x400.svg",
+      "destinationSha256": "30fa645116ba0df3f6666b32583a3c650c0f5d507467faf9030148b7201dbfcb",
+      "mode": "copy",
+      "source": "design/marks/out/claude-tokens/web/banner-light-1400x400.svg",
+      "sourceSha256": "30fa645116ba0df3f6666b32583a3c650c0f5d507467faf9030148b7201dbfcb"
+    },
+    {
+      "destination": "design/github/readme-banner-light.svg",
+      "destinationSha256": "30fa645116ba0df3f6666b32583a3c650c0f5d507467faf9030148b7201dbfcb",
+      "mode": "copy",
+      "source": "design/marks/out/claude-tokens/web/banner-light-1400x400.svg",
+      "sourceSha256": "30fa645116ba0df3f6666b32583a3c650c0f5d507467faf9030148b7201dbfcb"
+    },
+    {
+      "destination": "design/logo/claude-tokens-lockup-horizontal-dark.svg",
+      "destinationSha256": "58faaa5c1a21f0d1af757a13181b80987d6eadc3889ffba4b622f1d13226cfc7",
+      "mode": "copy",
+      "source": "design/marks/out/claude-tokens/wordmark/wordmark-horizontal-dark.svg",
+      "sourceSha256": "58faaa5c1a21f0d1af757a13181b80987d6eadc3889ffba4b622f1d13226cfc7"
+    },
+    {
+      "destination": "design/logo/claude-tokens-lockup-horizontal.svg",
+      "destinationSha256": "e26b856b0f3c3b40af7ca9315df48f4cf49375324f75067303971dff7e1377ee",
+      "mode": "copy",
+      "source": "design/marks/out/claude-tokens/wordmark/wordmark-horizontal-light.svg",
+      "sourceSha256": "e26b856b0f3c3b40af7ca9315df48f4cf49375324f75067303971dff7e1377ee"
+    },
+    {
+      "destination": "design/logo/claude-tokens-symbol-dark.svg",
+      "destinationSha256": "3c53bf3363104efe327dba0d95d70b6ffd22db3079f6f36d40c86c7c66ef26a0",
+      "mode": "copy",
+      "source": "design/marks/out/claude-tokens/svg/mark.svg",
+      "sourceSha256": "3c53bf3363104efe327dba0d95d70b6ffd22db3079f6f36d40c86c7c66ef26a0"
+    },
+    {
+      "destination": "design/logo/claude-tokens-symbol-mono-black.svg",
+      "destinationSha256": "cb172d6a123477312292eb3ef4d128045cf523d41e003f9016fd52fec8cf4161",
+      "mode": "copy",
+      "source": "design/marks/out/claude-tokens/svg/mark-mono.svg",
+      "sourceSha256": "cb172d6a123477312292eb3ef4d128045cf523d41e003f9016fd52fec8cf4161"
+    },
+    {
+      "destination": "design/logo/claude-tokens-symbol.svg",
+      "destinationSha256": "a654606895ac0417b64e20b56863e422893eaa9e702ca2cf3e07285861695340",
+      "mode": "copy",
+      "source": "design/marks/out/claude-tokens/svg/mark-light.svg",
+      "sourceSha256": "a654606895ac0417b64e20b56863e422893eaa9e702ca2cf3e07285861695340"
+    }
+  ],
+  "brandVersion": "1.1.0",
+  "canonicalSourceCommit": "31d19c52a2565d0f4ba200ecde6be8b32af6b1f4",
+  "canonicalSourceDirty": true,
+  "contentSetSha256": "346bfbf2024d1fe04d87393b0c64c03a93da5dfd2c57f6a8829e32f6415bdc9f",
+  "generatorSha256": "0e6a2b10c9b320f5edb2c351e69d3aab55391d372a338dd62f792ce7f8974701",
+  "lockSha256": "d8574f93ee9b99d1758cfbb20da047518e49df75c0cd8a5ac5697b397542a802",
+  "project": "claude-tokens",
+  "schemaVersion": 1,
+  "tokenSha256": "4436a3733ac7810580b0c586b7c044e8bb737c25e21ec33176127095f4bf6f23",
+  "visibility": "public"
+}
