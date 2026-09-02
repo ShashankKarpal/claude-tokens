@@ -1,23 +1,18 @@
 command: """
   export PATH="/opt/homebrew/bin:/usr/local/bin:$PATH"
   TODAY=$(date +%Y-%m-%d)
-  JSON=$(ccusage daily --json 2>/dev/null)
-  if [ -z "$JSON" ]; then
-    echo '{"status":"error","message":"ccusage not available"}'
-    exit 0
-  fi
-  TODAY_DATA=$(echo "$JSON" | jq -r --arg today "$TODAY" '.daily[] | select((.date // .period) == $today)')
-  if [ -z "$TODAY_DATA" ]; then
-    echo "{\\"status\\":\\"empty\\",\\"date\\":\\"$TODAY\\"}"
-    exit 0
-  fi
-  INPUT=$(echo "$TODAY_DATA" | jq -r '.inputTokens // 0')
-  OUTPUT=$(echo "$TODAY_DATA" | jq -r '.outputTokens // 0')
-  CACHE_READ=$(echo "$TODAY_DATA" | jq -r '.cacheReadTokens // 0')
-  CACHE_WRITE=$(echo "$TODAY_DATA" | jq -r '.cacheCreationTokens // 0')
-  TOTAL=$(echo "$TODAY_DATA" | jq -r '.totalTokens // 0')
-  COST=$(echo "$TODAY_DATA" | jq -r '.totalCost // 0')
-  echo "{\\"status\\":\\"ok\\",\\"date\\":\\"$TODAY\\",\\"input\\":$INPUT,\\"output\\":$OUTPUT,\\"cacheRead\\":$CACHE_READ,\\"cacheWrite\\":$CACHE_WRITE,\\"total\\":$TOTAL,\\"cost\\":$COST}"
+  SINCE=$(date -v-1d +%Y%m%d 2>/dev/null || date -d yesterday +%Y%m%d)
+  # One ccusage call bounded to two days (not the whole history every 30s) and
+  # one jq pass that builds the JSON itself, so a null or string field can
+  # never produce a malformed payload. Accepts .date or .period as the day key.
+  OUT=$(ccusage daily --json --since "$SINCE" 2>/dev/null | jq -c --arg t "$TODAY" '
+    ((.daily // []) | map(select((.date // .period) == $t)) | .[0]) as $d
+    | if $d == null then {status:"empty", date:$t}
+      else {status:"ok", date:$t,
+            input:($d.inputTokens // 0), output:($d.outputTokens // 0),
+            cacheRead:($d.cacheReadTokens // 0), cacheWrite:($d.cacheCreationTokens // 0),
+            total:($d.totalTokens // 0), cost:($d.totalCost // 0)} end' 2>/dev/null)
+  [ -n "$OUT" ] && echo "$OUT" || echo '{"status":"error","message":"ccusage not available"}'
 """
 
 refreshFrequency: 30000

@@ -14,6 +14,10 @@ jobs:
       - uses: actions/checkout@v6
       - name: Zip must contain the .widget folder wrapper
         run: unzip -l claude-tokens.widget.zip | grep -q 'claude-tokens.widget/index.coffee'
+      - name: Zip payload must match the source widget byte for byte
+        run: unzip -p claude-tokens.widget.zip claude-tokens.widget/index.coffee | diff - claude-tokens.widget/index.coffee
+      - name: Zip must carry no AppleDouble files
+        run: '! unzip -l claude-tokens.widget.zip | grep -q "/\._"'
 
   # The Uebersicht gallery (felixhageloh/uebersicht-widgets) hardcodes the master
   # branch in its widgets.json entry for this widget:
