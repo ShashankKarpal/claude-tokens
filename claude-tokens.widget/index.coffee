@@ -8,8 +8,11 @@ command: """
   # `ccusage claude daily`, not `ccusage daily`: since ccusage counts every
   # coding agent it detects, the bare command sums Claude Code with Codex and
   # others, and this tile says Claude Code. The claude subcommand is the
-  # Claude-only readout.
-  OUT=$(ccusage claude daily --json --since "$SINCE" 2>/dev/null | jq -c --arg t "$TODAY" '
+  # Claude-only readout. --offline prices from ccusage's bundled table instead
+  # of fetching one over the network on every tick: measured 6 to 9 s of
+  # socket wait versus 0.1 s, byte-identical figures. Token counts never
+  # depend on it; the cost line catches up when ccusage is upgraded.
+  OUT=$(ccusage claude daily --json --since "$SINCE" --offline 2>/dev/null | jq -c --arg t "$TODAY" '
     ((.daily // []) | map(select((.date // .period) == $t)) | .[0]) as $d
     | if $d == null then {status:"empty", date:$t}
       else {status:"ok", date:$t,

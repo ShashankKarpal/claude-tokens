@@ -23,7 +23,7 @@
 - Shows today's Claude Code token total on the desktop, formatted with k and M suffixes. Claude Code only: ccusage also detects other coding agents (Codex CLI and friends), and those are deliberately left out of this tile.
 - Breaks the total into input, output, cache create, and cache read.
 - Shows the API-pricing equivalent of that usage.
-- Refreshes every 30 seconds without any network call.
+- Refreshes every 30 seconds. No network call: ccusage runs in offline mode and prices from its bundled table.
 
 ## Features
 
@@ -34,7 +34,7 @@
 - **Configurable display.** Pin to a specific monitor by replacing `display: 'main'` with the function form.
 - **Configurable position.** Edit `bottom:` and `left:` in the `style:` block.
 - **Configurable refresh.** 30 seconds by default.
-- **No credentials.** ccusage reads Claude Code's local JSONL logs; the widget makes no network calls and needs no API key.
+- **No credentials, no network.** ccusage reads Claude Code's local JSONL logs and runs with `--offline`, so nothing leaves the machine and the tick never waits on a fetch. The cost line uses the pricing table bundled with your ccusage version; upgrade ccusage to pick up new models.
 
 ## Stack
 
@@ -72,6 +72,10 @@ design/                   brand assets, tokens, BRAND.md
 ## Note on cost
 
 The cost figure is ccusage's API-pricing equivalent of your usage. It is not a bill. Claude Code subscriptions cover this usage; the number is for awareness.
+
+## Note on branches
+
+`main` is the development branch. `master` is a publish pointer that CI force-updates to `main` after the zip check passes, because the Ubersicht gallery links this widget's screenshot and zip at `master` URLs. Nothing is ever committed to `master` directly; do not delete it.
 
 ## Compatibility
 
