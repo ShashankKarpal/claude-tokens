@@ -5,7 +5,11 @@ command: """
   # One ccusage call bounded to two days (not the whole history every 30s) and
   # one jq pass that builds the JSON itself, so a null or string field can
   # never produce a malformed payload. Accepts .date or .period as the day key.
-  OUT=$(ccusage daily --json --since "$SINCE" 2>/dev/null | jq -c --arg t "$TODAY" '
+  # `ccusage claude daily`, not `ccusage daily`: since ccusage counts every
+  # coding agent it detects, the bare command sums Claude Code with Codex and
+  # others, and this tile says Claude Code. The claude subcommand is the
+  # Claude-only readout.
+  OUT=$(ccusage claude daily --json --since "$SINCE" 2>/dev/null | jq -c --arg t "$TODAY" '
     ((.daily // []) | map(select((.date // .period) == $t)) | .[0]) as $d
     | if $d == null then {status:"empty", date:$t}
       else {status:"ok", date:$t,

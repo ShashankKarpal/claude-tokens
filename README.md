@@ -20,7 +20,7 @@
 
 ## What it does
 
-- Shows today's Claude Code token total on the desktop, formatted with k and M suffixes.
+- Shows today's Claude Code token total on the desktop, formatted with k and M suffixes. Claude Code only: ccusage also detects other coding agents (Codex CLI and friends), and those are deliberately left out of this tile.
 - Breaks the total into input, output, cache create, and cache read.
 - Shows the API-pricing equivalent of that usage.
 - Refreshes every 30 seconds without any network call.
