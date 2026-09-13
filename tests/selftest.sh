@@ -44,7 +44,8 @@ check "ccusage argv is: claude daily --json --since <d> --offline" 'grep -qE "^c
 clear_cache; B=$(run_widget)
 check "widget command gives the same payload" '[ "$A" = "$B" ]'
 check "cache file written for today" '[ -s "$CLAUDE_TOKENS_CACHE_DIR/claude-tokens-today-$TODAY.json" ]'
-MODE=$(stat -f %Lp "$CLAUDE_TOKENS_CACHE_DIR/claude-tokens-today-$TODAY.json" 2>/dev/null || stat -c %a "$CLAUDE_TOKENS_CACHE_DIR/claude-tokens-today-$TODAY.json")
+# GNU form first: on GNU, `stat -f` is the filesystem query and succeeds with the wrong answer; on macOS `stat -c` fails cleanly.
+MODE=$(stat -c %a "$CLAUDE_TOKENS_CACHE_DIR/claude-tokens-today-$TODAY.json" 2>/dev/null || stat -f %Lp "$CLAUDE_TOKENS_CACHE_DIR/claude-tokens-today-$TODAY.json")
 check "cache file is owner-only (600)" '[ "$MODE" = "600" ]'
 
 # 3. cache hit within 20 s: two consumers, one ccusage call

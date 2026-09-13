@@ -5,7 +5,7 @@ command: """
   DIR="${CLAUDE_TOKENS_CACHE_DIR:-$(getconf DARWIN_USER_TEMP_DIR 2>/dev/null || echo "${TMPDIR:-/tmp}")}"
   CACHE="$DIR/claude-tokens-today-$TODAY.json"
   if [ -s "$CACHE" ]; then
-    AGE=$(( $(date +%s) - $(stat -f %m "$CACHE" 2>/dev/null || stat -c %Y "$CACHE") ))
+    AGE=$(( $(date +%s) - $(stat -c %Y "$CACHE" 2>/dev/null || stat -f %m "$CACHE") ))
     [ "$AGE" -lt 20 ] && { cat "$CACHE"; exit 0; }
   fi
   # One ccusage call bounded to two days (not the whole history every 30s) and
