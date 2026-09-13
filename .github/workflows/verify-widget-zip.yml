@@ -18,6 +18,10 @@ jobs:
         run: unzip -p claude-tokens.widget.zip claude-tokens.widget/index.coffee | diff - claude-tokens.widget/index.coffee
       - name: Zip must carry no AppleDouble files
         run: '! unzip -l claude-tokens.widget.zip | grep -q "/\._"'
+      - name: Shared extractor body must match the widget command
+        run: diff <(sed -n '/^# --- widget command/,$p' bin/ccusage-today.sh | tail -n +2) <(awk '/^command: """/{f=1;next} f&&/^"""/{exit} f' claude-tokens.widget/index.coffee | sed 's/^  //')
+      - name: Selftest (parity, output states, shared cache)
+        run: bash tests/selftest.sh
 
   # The Uebersicht gallery (felixhageloh/uebersicht-widgets) hardcodes the master
   # branch in its widgets.json entry for this widget:

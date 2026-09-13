@@ -65,9 +65,15 @@ The tile appears on the desktop and updates itself. No interaction needed.
 ```
 claude-tokens.widget/     the widget (index.coffee)
 claude-tokens.widget.zip  packaged widget for the Ubersicht gallery
+bin/ccusage-today.sh      the extractor, one JSON line; the widget embeds the same body
+tests/selftest.sh         parity, output states, cache (bash tests/selftest.sh)
 widget.json               gallery manifest
 design/                   brand assets, tokens, BRAND.md
 ```
+
+## Using the same number elsewhere
+
+`bin/ccusage-today.sh` prints today's figures as one JSON object (`status` is `ok`, `empty`, or `error`). A menu bar tile or any other script can call it instead of running ccusage again: consumers polling every 30 seconds share one ccusage call through a small per-user cache file (20 seconds of freshness, keyed by day, owner-only, never caches an error). The widget stays a single self-contained file, so it carries a verbatim copy of the script body; CI and the selftest diff the two and fail on drift. Set `CLAUDE_TOKENS_CACHE_DIR` to move the cache.
 
 ## Note on cost
 
