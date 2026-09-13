@@ -22,7 +22,9 @@ landed on `main`; `master` follows automatically (publish pointer, see README).
   detects (`agent: "all"`), so on days Codex CLI ran the tile over-reported
   by up to three orders of magnitude (2026-09-03: 28.97M shown, 42.4k
   actual). The widget now reads `ccusage claude daily`.
-- README: scope, network and branch notes; this changelog created.
+- README: scope (Claude Code only, all accounts under one macOS user, no
+  desktop app or claude.ai), network, branch, development and plan notes;
+  widget.json description matches; this changelog created.
 
 ## 2026-09-02
 

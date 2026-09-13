@@ -12,7 +12,7 @@
 
 <p align="center">
   <img alt="Platform" src="https://img.shields.io/badge/platform-macOS-2D647F?style=flat-square">
-  <img alt="Status" src="https://img.shields.io/badge/status-v1.0-2D647F?style=flat-square">
+  <img alt="Status" src="https://img.shields.io/badge/status-v1.1-2D647F?style=flat-square">
   <img alt="No API keys" src="https://img.shields.io/badge/API%20keys-none-2D647F?style=flat-square">
   <img alt="Stack" src="https://img.shields.io/badge/built%20with-CoffeeScript-1A1917?style=flat-square">
   <a href="LICENSE"><img alt="License" src="https://img.shields.io/badge/license-MIT-1A1917?style=flat-square"></a>
@@ -21,8 +21,9 @@
 ## What it does
 
 - Shows today's Claude Code token total on the desktop, formatted with k and M suffixes. Claude Code only: ccusage also detects other coding agents (Codex CLI and friends), and those are deliberately left out of this tile.
+- Counts every Claude Code CLI session run under your macOS user, whichever Claude account was signed in at the time (they all write to the same local log folder). The Claude desktop app and claude.ai are not part of the number.
 - Breaks the total into input, output, cache create, and cache read.
-- Shows the API-pricing equivalent of that usage.
+- Shows the API-pricing equivalent of that usage, and optionally what share of one day of your subscription that is (see the plan ROI row below).
 - Refreshes every 30 seconds. No network call: ccusage runs in offline mode and prices from its bundled table.
 
 ## Features
@@ -31,6 +32,8 @@
 - **Full token breakdown.** Input, output, cache create, cache read, and total.
 - **Cost equivalent.** ccusage's API-pricing figure for the same usage.
 - **Last update time** shown under the total.
+- **Plan ROI row (optional).** One number in a config file turns on a row showing today's cost as a share of one day of your plan.
+- **Shared data source.** The extractor script behind the tile can feed a menu bar app or any other script, and consumers share one cached ccusage call.
 - **Configurable display.** Pin to a specific monitor by replacing `display: 'main'` with the function form.
 - **Configurable position.** Edit `bottom:` and `left:` in the `style:` block.
 - **Configurable refresh.** 30 seconds by default.
@@ -44,7 +47,7 @@
 
 ## Install
 
-Requires: Ubersicht, ccusage, jq.
+Requires: Ubersicht, ccusage (a version with the `ccusage claude` subcommand; tested with 20.1.0), jq.
 
 ```bash
 brew install ccusage jq
@@ -52,13 +55,13 @@ git clone https://github.com/ShashankKarpal/claude-tokens.git
 cp -r claude-tokens/claude-tokens.widget ~/Library/Application\ Support/Übersicht/widgets/
 ```
 
-Click the Ubersicht menu bar icon and choose Refresh all.
+Click the Ubersicht menu bar icon and choose Refresh all. Upgrading from an earlier copy: replace the folder the same way; there is nothing else to migrate.
 
 ## Usage
 
 ![Widget](design/github/screenshot.png)
 
-The tile appears on the desktop and updates itself. No interaction needed.
+The tile appears on the desktop and updates itself. No interaction needed. If ccusage is missing the tile says so instead of showing a number; a day with no Claude Code use reads 0.
 
 ## Project structure
 
@@ -82,6 +85,10 @@ Put the monthly price of your Claude subscription, as one number, in `~/.config/
 ## Note on cost
 
 The cost figure is ccusage's API-pricing equivalent of your usage. It is not a bill. Claude Code subscriptions cover this usage; the number is for awareness.
+
+## Development
+
+The widget's `command:` block is a verbatim copy of `bin/ccusage-today.sh` from its marker line down. To change how the number is computed: edit the script, paste the same lines into `claude-tokens.widget/index.coffee`, run `bash tests/selftest.sh` (fake ccusage, isolated cache, no real data touched), rebuild the gallery zip with `COPYFILE_DISABLE=1 zip -r -X claude-tokens.widget.zip claude-tokens.widget`, and copy `index.coffee` over your installed widget. CI repeats the zip check, the parity diff and the selftest on every push, and only then updates the `master` publish pointer. Two things the selftest guards that are easy to miss: the command block must not contain a backslash (CoffeeScript consumes it before the shell sees it), and it must parse under plain `sh`.
 
 ## Note on branches
 

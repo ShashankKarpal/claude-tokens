@@ -1,5 +1,5 @@
 {
   "name": "Claude Code Tokens",
-  "description": "Daily Claude Code token usage as a desktop tile, with input/output/cache breakdown and approximate API-equivalent cost via ccusage.",
+  "description": "Today's Claude Code token usage as a desktop tile: input/output/cache breakdown and API-equivalent cost via ccusage, Claude Code only, offline (no network), with an optional plan ROI row.",
   "author": "Shashank Karpal"
 }
