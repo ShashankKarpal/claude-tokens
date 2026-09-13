@@ -39,13 +39,21 @@ fi
 # of fetching one over the network on every tick: measured 6 to 9 s of
 # socket wait versus 0.1 s, byte-identical figures. Token counts never
 # depend on it; the cost line catches up when ccusage is upgraded.
-OUT=$(ccusage claude daily --json --since "$SINCE" --offline 2>/dev/null | jq -c --arg t "$TODAY" '
+# Optional plan line: ~/.config/claude-tokens/plan-usd-month holds one number
+# (what the subscription costs per month); the payload then carries plan/day
+# (30-day month) and today's API-equivalent cost as a percentage of it.
+# Absent, zero or malformed means no plan fields at all, never a wrong one.
+PLAN=$(cat "${CLAUDE_TOKENS_CONFIG_DIR:-$HOME/.config/claude-tokens}/plan-usd-month" 2>/dev/null | tr -d '[:space:]')
+OUT=$(ccusage claude daily --json --since "$SINCE" --offline 2>/dev/null | jq -c --arg t "$TODAY" --arg plan "$PLAN" '
   ((.daily // []) | map(select((.date // .period) == $t)) | .[0]) as $d
+  | (try ($plan | tonumber) catch 0) as $p
   | if $d == null then {status:"empty", date:$t}
     else {status:"ok", date:$t,
           input:($d.inputTokens // 0), output:($d.outputTokens // 0),
           cacheRead:($d.cacheReadTokens // 0), cacheWrite:($d.cacheCreationTokens // 0),
-          total:($d.totalTokens // 0), cost:($d.totalCost // 0)} end' 2>/dev/null)
+          total:($d.totalTokens // 0), cost:($d.totalCost // 0)}
+         + (if $p > 0 then {planUsdMonth:$p, planUsdDay:(($p / 30 * 100 | round) / 100),
+                            planPct:((($d.totalCost // 0) / ($p / 30) * 1000 | round) / 10)} else {} end) end' 2>/dev/null)
 if [ -n "$OUT" ]; then
   (umask 077; echo "$OUT" > "$CACHE.$$" && mv -f "$CACHE.$$" "$CACHE") 2>/dev/null
   find "$DIR" -maxdepth 1 '(' -name 'claude-tokens-today-*.json' ! -name "claude-tokens-today-$TODAY.json" -o -name 'claude-tokens-today-*.json.*' -mmin +5 ')' -delete 2>/dev/null

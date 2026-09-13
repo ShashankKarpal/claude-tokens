@@ -16,6 +16,7 @@ check(){ if eval "$2"; then ok "$1"; else bad "$1"; fi; }
 T=$(mktemp -d "${TMPDIR:-/tmp}/ct-selftest.XXXXXX")
 trap 'rm -rf "$T"' EXIT
 export CLAUDE_TOKENS_CACHE_DIR="$T/cache"; mkdir -p "$CLAUDE_TOKENS_CACHE_DIR"
+export CLAUDE_TOKENS_CONFIG_DIR="$T/config"; mkdir -p "$CLAUDE_TOKENS_CONFIG_DIR"   # never the owner's real file
 COUNT="$T/calls"; : > "$COUNT"; export COUNT
 TODAY=$(date +%Y-%m-%d); export TODAY
 
@@ -60,6 +61,18 @@ touch -t 202001010000 "$CLAUDE_TOKENS_CACHE_DIR/claude-tokens-today-$TODAY.json.
 touch -t 202001010000 "$CLAUDE_TOKENS_CACHE_DIR/claude-tokens-today-$TODAY.json"
 run_script >/dev/null
 check "yesterday's cache file and stale tmp removed, today's kept" '[ ! -e "$CLAUDE_TOKENS_CACHE_DIR/claude-tokens-today-2020-01-01.json" ] && [ ! -e "$CLAUDE_TOKENS_CACHE_DIR/claude-tokens-today-$TODAY.json.999" ] && [ -s "$CLAUDE_TOKENS_CACHE_DIR/claude-tokens-today-$TODAY.json" ]'
+
+# 5b. plan line: absent, set, malformed, zero (ok fake still exported)
+PLANF="$CLAUDE_TOKENS_CONFIG_DIR/plan-usd-month"
+check "no plan file: payload carries no plan fields" '! printf "%s" "$A" | grep -q plan'
+echo " 200 " > "$PLANF"; clear_cache; PL=$(run_script)
+check "plan 200: planUsdMonth 200, planUsdDay 6.67, planPct 18.5 (cost 1.2345)" '[ "$(printf "%s" "$PL" | jq -c "[.planUsdMonth,.planUsdDay,.planPct]")" = "[200,6.67,18.5]" ]'
+check "plan fields are appended after the base fields (contract unchanged)" '[ "$(printf "%s" "$PL" | jq -c "del(.planUsdMonth,.planUsdDay,.planPct)")" = "$A" ]'
+echo "twenty" > "$PLANF"; clear_cache; PM=$(run_script)
+check "malformed plan file: no plan fields, payload otherwise identical" '[ "$PM" = "$A" ]'
+echo "0" > "$PLANF"; clear_cache; PZ=$(run_script)
+check "plan 0: no plan fields" '[ "$PZ" = "$A" ]'
+rm -f "$PLANF"
 
 # 6. empty state
 ccusage(){ echo "$*" >> "$COUNT"; echo '{"daily":[],"totals":{}}'; }; export -f ccusage

@@ -5,6 +5,10 @@ landed on `main`; `master` follows automatically (publish pointer, see README).
 
 ## 2026-09-13
 
+- Optional plan ROI row: `~/.config/claude-tokens/plan-usd-month` (one
+  number, outside the repo) adds "Plan ROI: N% of $X/day" to the tile; absent,
+  zero or malformed means no row. Computed in the shared extractor, so any
+  consumer of it gets the same fields.
 - Shared extractor `bin/ccusage-today.sh`: one JSON line (`status` ok, empty
   or error) that other tiles can render instead of running ccusage again;
   consumers polling every 30 s share one ccusage call through a per-user cache

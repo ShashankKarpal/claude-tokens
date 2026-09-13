@@ -75,6 +75,10 @@ design/                   brand assets, tokens, BRAND.md
 
 `bin/ccusage-today.sh` prints today's figures as one JSON object (`status` is `ok`, `empty`, or `error`). A menu bar tile or any other script can call it instead of running ccusage again: consumers polling every 30 seconds share one ccusage call through a small per-user cache file (20 seconds of freshness, keyed by day, owner-only, never caches an error). The widget stays a single self-contained file, so it carries a verbatim copy of the script body; CI and the selftest diff the two and fail on drift. Set `CLAUDE_TOKENS_CACHE_DIR` to move the cache.
 
+## Optional: plan ROI line
+
+Put the monthly price of your Claude subscription, as one number, in `~/.config/claude-tokens/plan-usd-month` (for example `200`). The tile then adds a row such as `Plan ROI  18.5% of $6.67/day`: today's API-equivalent cost as a share of what one day of the plan costs (30-day month). No file, a zero, or anything that is not a number means the row is simply absent. The file lives outside the repo and is read on every refresh, so a change shows within about 20 seconds.
+
 ## Note on cost
 
 The cost figure is ccusage's API-pricing equivalent of your usage. It is not a bill. Claude Code subscriptions cover this usage; the number is for awareness.
