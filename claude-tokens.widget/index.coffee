@@ -111,8 +111,8 @@ update: (output, domEl) ->
 # rows 0.75 to 0.9, cost and plan rows 0.45 to 0.7 and 11px to 12px,
 # the 'updated' line 0.6 to 0.85 and 11px to 12px.
 style: """
-  top: 614px
-  left: 8px
+  top: 900px
+  left: 728px
   font-family: -apple-system, 'SF Pro Display', 'Helvetica Neue', sans-serif
   font-variant-numeric: tabular-nums
   -webkit-font-smoothing: antialiased
@@ -125,7 +125,7 @@ style: """
     border: 1px solid rgba(255, 255, 255, 0.08)
     border-radius: 18px
     padding: 18px 20px
-    width: 328px
+    width: 304px
     box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35)
 
   .header
