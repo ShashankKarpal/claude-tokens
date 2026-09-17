@@ -87,7 +87,7 @@ update: (output, domEl) ->
   domEl.querySelector('#main').textContent = display
   now = new Date()
   timeStr = now.toLocaleTimeString('en-US', {hour12: false})
-  domEl.querySelector('#subtitle').innerHTML = "tokens today · #{data.date}<br><span style='opacity:0.6; font-size:11px'>updated #{timeStr}</span>"
+  domEl.querySelector('#subtitle').innerHTML = "tokens today · #{data.date}<br><span style='opacity:0.85; font-size:12px'>updated #{timeStr}</span>"
   domEl.querySelector('#breakdown').innerHTML = """
     <div class='row'><span>Input</span><span>#{fmt(data.input)}</span></div>
     <div class='row'><span>Output</span><span>#{fmt(data.output)}</span></div>
@@ -107,9 +107,12 @@ update: (output, domEl) ->
 # is the shared stack used by all four desktop widgets (SF Pro, the macOS
 # system font); font-variant-numeric gives digits equal width so columns
 # of numbers line up.
+# Legibility pass 2026-09-17: title 0.6 to 0.85, subtitle 0.5 to 0.75,
+# rows 0.75 to 0.9, cost and plan rows 0.45 to 0.7 and 11px to 12px,
+# the 'updated' line 0.6 to 0.85 and 11px to 12px.
 style: """
-  bottom: 180px
-  left: 15px
+  top: 614px
+  left: 8px
   font-family: -apple-system, 'SF Pro Display', 'Helvetica Neue', sans-serif
   font-variant-numeric: tabular-nums
   -webkit-font-smoothing: antialiased
@@ -122,7 +125,7 @@ style: """
     border: 1px solid rgba(255, 255, 255, 0.08)
     border-radius: 18px
     padding: 18px 20px
-    width: 305px
+    width: 328px
     box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35)
 
   .header
@@ -139,7 +142,7 @@ style: """
     font-weight: 500
     letter-spacing: 0.3px
     text-transform: uppercase
-    color: rgba(255, 255, 255, 0.6)
+    color: rgba(255, 255, 255, 0.85)
 
   .main-number
     font-size: 48px
@@ -150,7 +153,7 @@ style: """
 
   .subtitle
     font-size: 14px
-    color: rgba(255, 255, 255, 0.5)
+    color: rgba(255, 255, 255, 0.75)
     margin-top: 4px
     margin-bottom: 14px
 
@@ -163,7 +166,7 @@ style: """
     justify-content: space-between
     font-size: 12px
     padding: 3px 0
-    color: rgba(255, 255, 255, 0.75)
+    color: rgba(255, 255, 255, 0.9)
 
   .row.total
     border-top: 1px solid rgba(255, 255, 255, 0.08)
@@ -173,6 +176,6 @@ style: """
     color: #fff
 
   .row.cost, .row.plan
-    color: rgba(255, 255, 255, 0.45)
-    font-size: 11px
+    color: rgba(255, 255, 255, 0.7)
+    font-size: 12px
 """
