@@ -101,10 +101,18 @@ update: (output, domEl) ->
       <div class='row plan'><span>Plan ROI</span><span>#{data.planPct}% of $#{data.planUsdDay.toFixed(2)}/day</span></div>
     """
 
+# STYLE: position first (use top OR bottom, left OR right; height is
+# automatic), then every element on the card. No semicolons in this block:
+# it is CoffeeScript, and indentation is significant. The font-family line
+# is the shared stack used by all four desktop widgets (SF Pro, the macOS
+# system font); font-variant-numeric gives digits equal width so columns
+# of numbers line up.
 style: """
   bottom: 180px
   left: 15px
-  font-family: -apple-system, 'SF Pro Display', system-ui, sans-serif
+  font-family: -apple-system, 'SF Pro Display', 'Helvetica Neue', sans-serif
+  font-variant-numeric: tabular-nums
+  -webkit-font-smoothing: antialiased
   color: #fff
 
   .widget-card
