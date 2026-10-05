@@ -3,6 +3,19 @@
 All notable changes to the claude-tokens widget. Dates are the day the change
 landed on `main`; `master` follows automatically (publish pointer, see README).
 
+## 2026-10-05
+
+- BUG FIXED: the tile showed 0 for a day of heavy use. Claude Code writes
+  one log folder per config dir, and an account started with
+  `CLAUDE_CONFIG_DIR` pointing at another folder (for example
+  `~/.claude-work`) logs there, not in `~/.claude`. The extractor read only
+  the default. It now counts `~/.claude`, `~/.config/claude` and every
+  `~/.claude-*` folder that has a `projects` dir, passed to ccusage as one
+  comma-separated `CLAUDE_CONFIG_DIR` (ccusage skips duplicate entries). A
+  `CLAUDE_CONFIG_DIR` set by the caller still wins. Widget command updated
+  in step; selftest gains four checks (27 total), and reverting the change
+  makes two of them fail.
+
 ## 2026-09-13
 
 - Optional plan ROI row: `~/.config/claude-tokens/plan-usd-month` (one

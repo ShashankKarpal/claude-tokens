@@ -21,7 +21,7 @@
 ## What it does
 
 - Shows today's Claude Code token total on the desktop, formatted with k and M suffixes. Claude Code only: ccusage also detects other coding agents (Codex CLI and friends), and those are deliberately left out of this tile.
-- Counts every Claude Code CLI session run under your macOS user, whichever Claude account was signed in at the time (they all write to the same local log folder). The Claude desktop app and claude.ai are not part of the number.
+- Counts every Claude Code CLI session run under your macOS user, whichever Claude account it used: it reads the default log folder (`~/.claude`) and every other `~/.claude*` folder an account was started with through `CLAUDE_CONFIG_DIR`. Set `CLAUDE_CONFIG_DIR` yourself to count only specific folders. The Claude desktop app and claude.ai are not part of the number.
 - Breaks the total into input, output, cache create, and cache read.
 - Shows the API-pricing equivalent of that usage, and optionally what share of one day of your subscription that is (see the plan ROI row below).
 - Refreshes every 30 seconds. No network call: ccusage runs in offline mode and prices from its bundled table.

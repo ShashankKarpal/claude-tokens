@@ -91,6 +91,22 @@ check "error is not cached" '[ ! -e "$CLAUDE_TOKENS_CACHE_DIR/claude-tokens-toda
 ccusage(){ echo 'not json'; }; export -f ccusage
 clear_cache; Y=$(run_script)
 check "garbage from ccusage gives the error payload" '[ "$Y" = "{\"status\":\"error\",\"message\":\"ccusage not available\"}" ]'
+# 9. config dirs: every ~/.claude* folder with a projects dir is counted,
+# unless the caller set CLAUDE_CONFIG_DIR (that wins). The fake records the
+# CLAUDE_CONFIG_DIR ccusage was started with.
+H="$T/home"; mkdir -p "$H/.claude/projects" "$H/.claude-a/projects" "$H/.claude-b" "$H/.config/claude/projects"
+export CCDFILE="$T/ccd"
+ccusage(){ echo "${CLAUDE_CONFIG_DIR:-unset}" > "$CCDFILE"; echo '{"daily":[],"totals":{}}'; }; export -f ccusage
+clear_cache; (unset CLAUDE_CONFIG_DIR; HOME="$H" bash "$SCRIPT" >/dev/null 2>&1)
+check "default: all ~/.claude* dirs with projects, in order, no stray dir" '[ "$(cat "$T/ccd")" = "$H/.claude,$H/.config/claude,$H/.claude-a" ]'
+clear_cache; (unset CLAUDE_CONFIG_DIR; HOME="$H" bash -c "$CMD" >/dev/null 2>&1)
+check "widget command picks the same dirs" '[ "$(cat "$T/ccd")" = "$H/.claude,$H/.config/claude,$H/.claude-a" ]'
+clear_cache; (HOME="$H" CLAUDE_CONFIG_DIR=/only/this bash "$SCRIPT" >/dev/null 2>&1)
+check "an explicit CLAUDE_CONFIG_DIR wins" '[ "$(cat "$T/ccd")" = "/only/this" ]'
+E2="$T/emptyhome"; mkdir -p "$E2"
+clear_cache; (unset CLAUDE_CONFIG_DIR; HOME="$E2" bash "$SCRIPT" >/dev/null 2>&1)
+check "no log folders at all: CLAUDE_CONFIG_DIR left unset" '[ "$(cat "$T/ccd")" = "unset" ]'
+
 unset -f ccusage
 
 echo "selftest: $N checks, $FAILS failed"

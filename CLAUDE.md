@@ -22,3 +22,8 @@
 - Plan ROI row: `~/.config/claude-tokens/plan-usd-month` (override dir `CLAUDE_TOKENS_CONFIG_DIR`), one number; absent, zero or malformed means no plan fields. Runtime config, never in the repo.
 - Release path for any extractor change: edit script, paste into the widget, `bash tests/selftest.sh`, rebuild the zip with `COPYFILE_DISABLE=1 zip -r -X claude-tokens.widget.zip claude-tokens.widget`, copy `index.coffee` into the installed widget folder and `cmp` it, commit, push; CI then moves `master`.
 - `docs/STATE.md` is excluded through `.git/info/exclude` (local-only); `CHANGELOG.md` is the tracked history. Screenshots (`screenshot.png`, `design/github/screenshot.png`, `docs/claude-tokens.png`) date from 2026-07-07 and predate the brand refresh and today's rows; owner retakes them.
+
+## 2026-10-05: count every config dir
+
+- BUG FIXED: sessions started with `CLAUDE_CONFIG_DIR` set to another folder log there, so reading only `~/.claude` showed 0 on a day of real use. The extractor now builds `CLAUDE_CONFIG_DIR` from `~/.claude`, `~/.config/claude` and every `~/.claude-*` folder with a `projects` dir (comma list; ccusage dedups), unless the caller set it. RULE: never assume one log folder per user.
+- Cost can read 0 for a model newer than the bundled `--offline` price table; tokens are unaffected and the cost catches up when ccusage is upgraded (already documented above).

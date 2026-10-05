@@ -44,6 +44,20 @@ fi
 # (30-day month) and today's API-equivalent cost as a percentage of it.
 # Absent, zero or malformed means no plan fields at all, never a wrong one.
 PLAN=$(cat "${CLAUDE_TOKENS_CONFIG_DIR:-$HOME/.config/claude-tokens}/plan-usd-month" 2>/dev/null | tr -d '[:space:]')
+# Claude Code keeps one log folder per config dir: ~/.claude (and
+# ~/.config/claude) by default, plus a separate one for every account started
+# with CLAUDE_CONFIG_DIR pointing elsewhere (for example ~/.claude-work).
+# Reading only the default undercounts, down to zero on days every session ran
+# under another config dir. So, unless the caller already chose a
+# CLAUDE_CONFIG_DIR (that always wins), count every ~/.claude* folder that has
+# a projects dir; ccusage takes a comma-separated list and skips duplicates.
+if [ -z "${CLAUDE_CONFIG_DIR:-}" ]; then
+  CCD=""
+  for d in "$HOME/.claude" "$HOME/.config/claude" "$HOME"/.claude-*; do
+    [ -d "$d/projects" ] && CCD="${CCD:+$CCD,}$d"
+  done
+  [ -n "$CCD" ] && export CLAUDE_CONFIG_DIR="$CCD"
+fi
 OUT=$(ccusage claude daily --json --since "$SINCE" --offline 2>/dev/null | jq -c --arg t "$TODAY" --arg plan "$PLAN" '
   ((.daily // []) | map(select((.date // .period) == $t)) | .[0]) as $d
   | (try ($plan | tonumber) catch 0) as $p
