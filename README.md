@@ -100,7 +100,7 @@ Apple Silicon, macOS 14 or later. Works on any Mac that runs Ubersicht.
 
 ## License
 
-MIT. See [LICENSE](LICENSE).
+MIT for the source code; see [LICENSE](LICENSE). The name, logos, icons and other brand assets are not covered; see [TRADEMARKS.md](TRADEMARKS.md).
 
 ## Author
 
