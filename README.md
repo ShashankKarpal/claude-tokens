@@ -114,4 +114,4 @@ MIT for the source code; see [LICENSE](LICENSE). The name, logos, icons and othe
 
 Built by Shashank Karpal.
 
-> Built with Claude (Anthropic) as a debugging partner. Design, decisions, and final review were the author's.
+> Designed and built with Claude (Anthropic).
