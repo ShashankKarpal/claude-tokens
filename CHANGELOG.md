@@ -3,6 +3,14 @@
 All notable changes to the claude-tokens widget. Dates are the day the change
 landed on `main`; `master` follows automatically (publish pointer, see README).
 
+## 2026-11-02
+
+- README: position knobs are `top:` and `left:`; the folder list matches the extractor; compatibility no longer contradicts itself; install adds Übersicht; status badge no longer names a version this repo never tagged; project structure complete. Audit readme-truth-2026-11.
+
+## 2026-10-31
+
+- Licence: the source code stays MIT (LICENSE unchanged). The name, logos, icons and other brand assets are reserved in the new TRADEMARKS.md, and the README licence line points to both.
+
 ## 2026-10-05
 
 - BUG FIXED: the tile showed 0 for a day of heavy use. Claude Code writes

@@ -8,11 +8,11 @@
 
 <h1 align="center">claude-tokens</h1>
 
-<p align="center"><b>An Ubersicht widget showing daily Claude Code token usage as a desktop tile on macOS.</b></p>
+<p align="center"><b>An Übersicht widget showing daily Claude Code token usage as a desktop tile on macOS.</b></p>
 
 <p align="center">
   <img alt="Platform" src="https://img.shields.io/badge/platform-macOS-2D647F?style=flat-square">
-  <img alt="Status" src="https://img.shields.io/badge/status-v1.1-2D647F?style=flat-square">
+  <img alt="Status" src="https://img.shields.io/badge/status-maintained-2D647F?style=flat-square">
   <img alt="No API keys" src="https://img.shields.io/badge/API%20keys-none-2D647F?style=flat-square">
   <img alt="Stack" src="https://img.shields.io/badge/built%20with-CoffeeScript-1A1917?style=flat-square">
   <a href="LICENSE"><img alt="License" src="https://img.shields.io/badge/license-MIT-1A1917?style=flat-square"></a>
@@ -21,41 +21,44 @@
 ## What it does
 
 - Shows today's Claude Code token total on the desktop, formatted with k and M suffixes. Claude Code only: ccusage also detects other coding agents (Codex CLI and friends), and those are deliberately left out of this tile.
-- Counts every Claude Code CLI session run under your macOS user, whichever Claude account it used: it reads the default log folder (`~/.claude`) and every other `~/.claude*` folder an account was started with through `CLAUDE_CONFIG_DIR`. Set `CLAUDE_CONFIG_DIR` yourself to count only specific folders. The Claude desktop app and claude.ai are not part of the number.
+- Counts every Claude Code CLI session run under your macOS user, whichever Claude account it used: it reads `~/.claude`, `~/.config/claude`, and every `~/.claude-*` folder that has a `projects` folder (an account started with `CLAUDE_CONFIG_DIR` pointing at such a folder logs there). Set `CLAUDE_CONFIG_DIR` yourself to count only specific folders. The Claude desktop app and claude.ai are not part of the number.
 - Breaks the total into input, output, cache create, and cache read.
 - Shows the API-pricing equivalent of that usage, and optionally what share of one day of your subscription that is (see the plan ROI row below).
 - Refreshes every 30 seconds. No network call: ccusage runs in offline mode and prices from its bundled table.
 
 ## Features
 
-- **Desktop tile.** Renders through Ubersicht, always visible, never in the way.
+- **Desktop tile.** Renders through Übersicht, always visible, never in the way.
 - **Full token breakdown.** Input, output, cache create, cache read, and total.
 - **Cost equivalent.** ccusage's API-pricing figure for the same usage.
 - **Last update time** shown under the total.
 - **Plan ROI row (optional).** One number in a config file turns on a row showing today's cost as a share of one day of your plan.
 - **Shared data source.** The extractor script behind the tile can feed a menu bar app or any other script, and consumers share one cached ccusage call.
 - **Configurable display.** Pin to a specific monitor by replacing `display: 'main'` with the function form.
-- **Configurable position.** Edit `bottom:` and `left:` in the `style:` block.
+- **Configurable position.** Edit `top:` and `left:` in the `style:` block.
 - **Configurable refresh.** 30 seconds by default.
 - **No credentials, no network.** ccusage reads Claude Code's local JSONL logs and runs with `--offline`, so nothing leaves the machine and the tick never waits on a fetch. The cost line uses the pricing table bundled with your ccusage version; upgrade ccusage to pick up new models.
 
 ## Stack
 
-- Widget: CoffeeScript, rendered by [Ubersicht](http://tracesof.net/uebersicht/)
-- Usage data: [ccusage](https://github.com/ryoppippi/ccusage)
+- Widget: CoffeeScript, rendered by [Übersicht](http://tracesof.net/uebersicht/)
+- Usage data: [ccusage](https://github.com/ccusage/ccusage)
 - JSON handling: jq
 
 ## Install
 
-Requires: Ubersicht, ccusage (a version with the `ccusage claude` subcommand; tested with 20.1.0), jq.
+Requires: Übersicht, ccusage (a version with the `ccusage claude` subcommand; tested with 20.1.0), jq.
 
 ```bash
+brew install --cask ubersicht
 brew install ccusage jq
 git clone https://github.com/ShashankKarpal/claude-tokens.git
 cp -r claude-tokens/claude-tokens.widget ~/Library/Application\ Support/Übersicht/widgets/
 ```
 
-Click the Ubersicht menu bar icon and choose Refresh all. Upgrading from an earlier copy: replace the folder the same way; there is nothing else to migrate.
+Click the Übersicht menu bar icon and choose Refresh all. Upgrading from an earlier copy: replace the folder the same way; there is nothing else to migrate.
+
+If the tile says ccusage is missing a command, your ccusage predates `ccusage claude`. Check with `ccusage --version` and upgrade ccusage.
 
 ## Usage
 
@@ -67,11 +70,16 @@ The tile appears on the desktop and updates itself. No interaction needed. If cc
 
 ```
 claude-tokens.widget/     the widget (index.coffee)
-claude-tokens.widget.zip  packaged widget for the Ubersicht gallery
+claude-tokens.widget.zip  packaged widget for the Übersicht gallery
+screenshot.png            gallery screenshot (the gallery reads it at the master URL)
 bin/ccusage-today.sh      the extractor, one JSON line; the widget embeds the same body
 tests/selftest.sh         parity, output states, cache (bash tests/selftest.sh)
 widget.json               gallery manifest
 design/                   brand assets, tokens, BRAND.md
+docs/                     older screenshot
+CHANGELOG.md              dated changes
+CLAUDE.md                 decision log, public
+LICENSE, TRADEMARKS.md    MIT for the code; brand assets reserved
 ```
 
 ## Using the same number elsewhere
@@ -92,11 +100,11 @@ The widget's `command:` block is a verbatim copy of `bin/ccusage-today.sh` from 
 
 ## Note on branches
 
-`main` is the development branch. `master` is a publish pointer that CI force-updates to `main` after the zip check passes, because the Ubersicht gallery links this widget's screenshot and zip at `master` URLs. Nothing is ever committed to `master` directly; do not delete it.
+`main` is the development branch. `master` is a publish pointer that CI force-updates to `main` after the zip check passes, because the Übersicht gallery links this widget's screenshot and zip at `master` URLs. Nothing is ever committed to `master` directly; do not delete it.
 
 ## Compatibility
 
-Apple Silicon, macOS 14 or later. Works on any Mac that runs Ubersicht.
+Any Mac that runs Übersicht. Developed and tested on an Apple Silicon Mac.
 
 ## License
 
